@@ -22,10 +22,10 @@ public class CDashboardPage {
         headingDashboard.shouldBe(Condition.text("Ваши карты"));
     }
 
-    static void openTransferForm(String cardNumber) {
+    public DTransferPage openTransferForm(String cardNumber) {
         String lastFourDigit = cardNumber.substring(cardNumber.length() - 4);
         cardList.findBy(Condition.text(lastFourDigit)).$(withText("Пополнить")).click();
-        new DTransferPage();
+        return new DTransferPage();
     }
 
     public void updateBalance() {
@@ -38,12 +38,5 @@ public class CDashboardPage {
         String lastFourDigit = cardNumber.substring(cardNumber.length() - 4);
         String[] cardInfo = cardList.findBy(Condition.text(lastFourDigit)).getText().split(" ");
         return Integer.parseInt(cardInfo[5]);
-    }
-
-    public void moneyTransfer(String cardNumberFrom, String cardNumberTo, int amount) {
-        openTransferForm(cardNumberTo);
-        DTransferPage.setAmountValue(amount);
-        DTransferPage.setFromValue(cardNumberFrom);
-        DTransferPage.doTransfer();
     }
 }
